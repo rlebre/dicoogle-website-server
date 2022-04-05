@@ -51,7 +51,12 @@ exports.createDownloadLink = async function (req, res) {
             from: `Dicoogle Downloader <${process.env.MAIL_USER}>`,
             to: email,
             subject: `Dicoogle v${release.tag_name} download link`,
-            html: downloadTemplate.buildTemplate(name, 'Dowload', `Dicoogle v${release.tag_name}`, `${process.env.APP_URL}/download/${hash}`)
+            html: downloadTemplate.buildTemplate(name, 'Dowload', `Dicoogle v${release.tag_name}`, `${process.env.APP_URL}/download/${hash}`),
+            attachments: [{
+                filename: 'Logo.png',
+                path: 'assets/images/logo-small.png',
+                cid: 'logo'
+            }]
         });
 
         return res.json({ mail: info });

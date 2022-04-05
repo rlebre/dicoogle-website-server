@@ -178,7 +178,7 @@ const downloadTemplate = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//E
 						<td class='movableContentContainer'>
 
 							<div class='movableContent'>
-								<img src="cid:img1" alt='Logo' data-default="placeholder" />
+								<img src="cid:logo" alt='Logo' data-default="placeholder" />
 
 							</div>
 
@@ -274,11 +274,11 @@ const downloadTemplate = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//E
 </html>`
 
 const buildTemplate = (name, subject, resource, download_link) => {
-    return downloadTemplate
-        .replace(/\[username\]/g, name)
-        .replace(/\[subject\]/g, subject)
-        .replace(/\[resource\]/g, resource)
-        .replace(/\[download_link\]/g, download_link)
+	return downloadTemplate
+		.replace(/\[username\]/g, name)
+		.replace(/\[subject\]/g, subject)
+		.replace(/\[resource\]/g, resource)
+		.replace(/\[download_link\]/g, download_link)
 
 }
 
