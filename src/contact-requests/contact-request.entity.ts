@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ContactRequest {
@@ -16,4 +16,10 @@ export class ContactRequest {
 
     @Column()
     message: string;
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @CreateDateColumn()
+    updated_at: Date;
 }
