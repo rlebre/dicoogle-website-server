@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ContactRequest } from 'src/contact-requests/contact-request.entity';
-import { DownloadRequest } from 'src/download-requests/download-request.entity';
+import { DownloadRequest } from 'src/download-requests/entities/download-request.entity';
 
 @Injectable()
 export class MailService {

@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
-import { NewContactDto } from './contact-request.dto';
 import { ContactRequest } from './contact-request.entity';
+import { NewContactDto } from './dtos/contact-request.dto';
 
 @Injectable()
 export class ContactRequestsService {

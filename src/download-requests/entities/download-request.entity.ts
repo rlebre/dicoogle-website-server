@@ -9,7 +9,7 @@ export class DownloadRequest {
     @Column()
     resource: string;
 
-    @Column()
+    @Column({ name: 'download_link' })
     downloadLink: string;
 
     @Column()
@@ -22,15 +22,15 @@ export class DownloadRequest {
     @Column({ default: true })
     approved: boolean;
 
-    @Column({ default: 0 })
+    @Column({ default: 0, name: 'download_count' })
     downloadCount: number;
 
     @ManyToOne(() => User, user => user.downloadRequests)
     user: User;
 
-    @CreateDateColumn()
-    created_at: Date;
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
 
-    @UpdateDateColumn()
-    updated_at: Date;
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
 }

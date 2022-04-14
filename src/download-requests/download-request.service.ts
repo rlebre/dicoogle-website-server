@@ -1,11 +1,12 @@
-import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { randomUUID } from 'crypto';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
-import { DownloadRequest } from './download-request.entity';
-import { CreateDownloadRequestDto } from './dto/create-dl-request.dto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './user.entity';
+import { CreateDownloadRequestDto } from './dtos/create-download-request.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { DownloadRequest } from './entities/download-request.entity';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class DownloadRequestService {
@@ -17,14 +18,11 @@ export class DownloadRequestService {
         const user = await this.userRepository.save(newUser);
 
         newDownloadRequest.user = user;
+        newDownloadRequest.hash = randomUUID();
+        newDownloadRequest.downloadLink = `${process.env.BASE_URL}/download/${newDownloadRequest.hash}`;
+        this.mailService.sendDownloadLink(newDownloadRequest);
 
-        try {
-            const dl = await this.downloadRequestRepository.save(newDownloadRequest)
-            this.mailService.sendDownloadLink(dl);
-            return dl;
-        } catch (e) {
-            throw new InternalServerErrorException(e);
-        }
+        return this.downloadRequestRepository.save(newDownloadRequest)
     }
 
     async getLink(hash: string): Promise<DownloadRequest> {

@@ -9,7 +9,6 @@ export class NewContactDto {
     @IsEmail({ validationOptions: { message: "Email is not valid" } })
     readonly email: string;
 
-
     @IsNotEmpty({ message: 'Please enter a message' })
     readonly message: string;
 }
