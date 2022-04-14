@@ -4,7 +4,7 @@ export class CreateUserDto {
     @IsNotEmpty({ message: "Name is required" })
     readonly name: string;
 
-    @IsEmail({ message: "Email is not valid" })
+    @IsEmail({ validationOptions: { message: "Email is not valid" } })
     email: string;
 
     readonly company: string;

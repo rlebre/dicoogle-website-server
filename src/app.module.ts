@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DownloadRequestModule } from './download-requests/download-request.module';
 import { MailModule } from './mail/mail.module';
+import { ContactRequestsModule } from './contact-requests/contact-requests.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { MailModule } from './mail/mail.module';
       synchronize: true
     }),
     DownloadRequestModule,
-    MailModule
+    MailModule,
+    ContactRequestsModule
   ],
   controllers: [AppController],
   providers: [AppService]

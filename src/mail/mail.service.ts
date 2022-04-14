@@ -9,7 +9,7 @@ export class MailService {
     constructor(private mailerService: MailerService, private configService: ConfigService) { }
 
     async sendDownloadLink(downloadRequest: DownloadRequest) {
-        const url = `${this.configService.get('APP_URL')}/download-request/${downloadRequest.id}`;
+        const url = `${this.configService.get('APP_URL')}/download-request/${downloadRequest.hash}`;
 
         await this.mailerService.sendMail({
             to: downloadRequest.user.email,

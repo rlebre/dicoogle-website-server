@@ -1,15 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { DownloadRequest } from "./download-request.entity";
 
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
-
     @Column()
     name: string;
 
-    @Column()
+    @PrimaryColumn({ unique: true })
     email: string;
 
     @Column()
@@ -26,4 +23,10 @@ export class User {
 
     @OneToMany(() => DownloadRequest, downloadRequest => downloadRequest.user)
     downloadRequests: DownloadRequest[];
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
 }
