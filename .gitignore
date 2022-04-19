@@ -44,3 +44,4 @@ lerna-debug.log*
 .eslintcache
 
 *.sqlite3
+assets/release/*.zip

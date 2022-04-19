@@ -9,9 +9,6 @@ export class DownloadRequest {
     @Column()
     resource: string;
 
-    @Column({ name: 'download_link' })
-    downloadLink: string;
-
     @Column()
     @Generated("uuid")
     hash: string;

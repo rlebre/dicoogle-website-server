@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { randomUUID } from 'crypto';
+import { DicoogleReleasesService } from 'src/common/dicoogle-releases.global';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
 import { CreateDownloadRequestDto } from './dtos/create-download-request.dto';
@@ -19,14 +20,14 @@ export class DownloadRequestService {
 
         newDownloadRequest.user = user;
         newDownloadRequest.hash = randomUUID();
-        newDownloadRequest.downloadLink = `${process.env.BASE_URL}/download/${newDownloadRequest.hash}`;
         this.mailService.sendDownloadLink(newDownloadRequest);
 
         return this.downloadRequestRepository.save(newDownloadRequest)
     }
 
-    async getLink(hash: string): Promise<DownloadRequest> {
+    async getLink(hash: string): Promise<string> {
         const downloadLink = await this.downloadRequestRepository.findOneByOrFail({ hash });
+
         if (!downloadLink.approved) {
             throw new UnauthorizedException();
         }
@@ -34,6 +35,9 @@ export class DownloadRequestService {
         downloadLink.downloadCount++;
         await this.downloadRequestRepository.save(downloadLink);
 
-        return downloadLink;
+        const redirectLink = DicoogleReleasesService.ghReleases[downloadLink.resource]?.downloadLink ||
+            `static/${downloadLink.resource}`
+
+        return redirectLink;
     }
 }

@@ -1,6 +1,9 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Res, StreamableFile, UseGuards } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import { DicoogleReleasesService } from 'src/common/dicoogle-releases.global';
 import { GoogleRecaptchaGuard } from 'src/common/guards/google-recaptcha.guard';
 import { DownloadRequestService } from './download-request.service';
 import { CreateDownloadRequestDto } from './dtos/create-download-request.dto';
@@ -30,7 +33,25 @@ export class DownloadRequestController {
 
     @Get(':hash')
     async get(@Res() res, @Param('hash') hash: string) {
-        const download = await this.downloadRequestService.getLink(hash);
-        return res.redirect(download.downloadLink)
+        console.log(hash);
+        const downloadLink = await this.downloadRequestService.getLink(hash);
+        return res.redirect(downloadLink)
+    }
+
+    @Get('static/:resource')
+    getFileCustomizedResponse(@Res({ passthrough: true }) res, @Param('resource') resource: string): StreamableFile {
+        const filename = DicoogleReleasesService.staticReleases[resource]?.asset;
+
+        if (!filename) {
+            throw new BadRequestException('Resource not found');
+        }
+
+        const file = createReadStream(join(process.cwd(), 'assets', 'release', filename));
+
+        res.set({
+            'Content-Type': 'application/json',
+            'Content-Disposition': `attachment; filename="${filename}"`
+        })
+        return new StreamableFile(file);
     }
 }
