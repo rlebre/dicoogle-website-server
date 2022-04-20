@@ -19,6 +19,9 @@ export class User {
     interests: string;
 
     @Column({ default: false })
+    newsletter: boolean;
+
+    @Column({ default: false })
     removed: boolean;
 
     @OneToMany(() => DownloadRequest, downloadRequest => downloadRequest.user)

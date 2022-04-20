@@ -5,14 +5,14 @@ export class CreateUserDto {
     readonly name: string;
 
     @IsEmail({ validationOptions: { message: "Email is not valid" } })
-    email: string;
+    readonly email: string;
 
     readonly company: string;
 
     @IsNotEmpty({ message: 'Please enter your country' })
     readonly country: string;
 
-    readonly interests: string;
+    readonly interests?: string;
 
-    readonly newsletter: boolean;
+    readonly newsletter?: boolean;
 }

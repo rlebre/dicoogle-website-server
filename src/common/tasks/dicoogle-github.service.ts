@@ -22,7 +22,6 @@ export class DicoogleGithubService {
                 );
 
             const result = releases.reduce((obj, cur) => ({ ...obj, [cur.tag_name]: cur }), {})
-            console.log('Retrieving...');
             DicoogleReleasesService.ghReleases = result;
         });
     }

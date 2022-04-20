@@ -33,7 +33,6 @@ export class DownloadRequestController {
 
     @Get(':hash')
     async get(@Res() res, @Param('hash') hash: string) {
-        console.log(hash);
         const downloadLink = await this.downloadRequestService.getLink(hash);
         return res.redirect(downloadLink)
     }

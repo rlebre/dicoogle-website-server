@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { DicoogleReleasesService } from 'src/common/dicoogle-releases.global';
 import { ContactRequest } from 'src/contact-requests/contact-request.entity';
 import { DownloadRequest } from 'src/download-requests/entities/download-request.entity';
 
@@ -10,6 +11,7 @@ export class MailService {
 
     async sendDownloadLink(downloadRequest: DownloadRequest) {
         const url = `${this.configService.get('APP_URL')}/download/${downloadRequest.hash}`;
+        const { tag_name } = DicoogleReleasesService.ghReleases[downloadRequest.resource] || DicoogleReleasesService.staticReleases[downloadRequest.resource];
 
         await this.mailerService.sendMail({
             to: downloadRequest.user.email,
@@ -19,7 +21,7 @@ export class MailService {
             context: {
                 subject: `Dicoogle ${downloadRequest.resource} download link`,
                 username: downloadRequest.user.name,
-                resource: downloadRequest.resource,
+                resource: tag_name || downloadRequest.resource,
                 download_link: url,
             },
         });
