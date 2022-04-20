@@ -22,6 +22,14 @@ export class DownloadRequestService {
         newDownloadRequest.hash = randomUUID();
         this.mailService.sendDownloadLink(newDownloadRequest);
 
+        if (downloadRequest.pluginsSourceCode) {
+            const pluginDownloadRequest = this.downloadRequestRepository.create({ resource: 'dicoogle-plugins-sources-v3.0.0' });
+            pluginDownloadRequest.user = user;
+            pluginDownloadRequest.hash = randomUUID();
+            this.mailService.sendDownloadLink(pluginDownloadRequest);
+            await this.downloadRequestRepository.save(pluginDownloadRequest)
+        }
+
         return this.downloadRequestRepository.save(newDownloadRequest)
     }
 
