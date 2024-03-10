@@ -6,6 +6,5 @@
   "arrowParens": "always",
   "jsxSingleQuote": true,
   "printWidth": 100,
-  "quoteProps": "preserve",
-  "bracketSpacing": false
+  "quoteProps": "preserve"
 }

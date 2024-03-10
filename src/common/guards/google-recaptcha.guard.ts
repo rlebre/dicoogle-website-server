@@ -5,10 +5,12 @@ import { firstValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class GoogleRecaptchaGuard implements CanActivate {
-  constructor(private readonly httpService: HttpService, private readonly config: ConfigService) { }
+  constructor(private readonly httpService: HttpService, private readonly config: ConfigService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const { body: { token } } = context.switchToHttp().getRequest();
+    const {
+      body: { token }
+    } = context.switchToHttp().getRequest();
 
     if (!token) {
       throw new ForbiddenException();
@@ -17,7 +19,11 @@ export class GoogleRecaptchaGuard implements CanActivate {
     const recaptchaValidation$ = this.verifyRecaptcha(token);
     const recaptchaValidation = await firstValueFrom(recaptchaValidation$);
 
-    if (!recaptchaValidation.success || recaptchaValidation.score < 0.5 || (recaptchaValidation.action !== 'contact' && recaptchaValidation.action !== 'download')) {
+    if (
+      !recaptchaValidation.success ||
+      recaptchaValidation.score < 0.5 ||
+      (recaptchaValidation.action !== 'contact' && recaptchaValidation.action !== 'download')
+    ) {
       throw new ForbiddenException('Recaptcha verification failed.');
     }
 
@@ -25,8 +31,16 @@ export class GoogleRecaptchaGuard implements CanActivate {
   }
 
   verifyRecaptcha(token: string) {
-    return this.httpService.post(`https://www.google.com/recaptcha/api/siteverify?secret=${this.config.get('RECAPTCHA_SECRET')}&response=${token}`).pipe(map(response => {
-      return response.data
-    }));
+    return this.httpService
+      .post(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${this.config.get(
+          'RECAPTCHA_SECRET'
+        )}&response=${token}`
+      )
+      .pipe(
+        map((response) => {
+          return response.data;
+        })
+      );
   }
 }
