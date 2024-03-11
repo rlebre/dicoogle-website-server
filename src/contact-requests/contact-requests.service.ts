@@ -7,12 +7,15 @@ import { NewContactDto } from './dtos/contact-request.dto';
 
 @Injectable()
 export class ContactRequestsService {
+  constructor(
+    private mailService: MailService,
+    @InjectRepository(ContactRequest)
+    private readonly contactRequestRepository: Repository<ContactRequest>
+  ) {}
 
-    constructor(private mailService: MailService, @InjectRepository(ContactRequest) private readonly contactRequestRepository: Repository<ContactRequest>) { }
-
-    async sendEmail(newContact: NewContactDto) {
-        const newContactRequest = this.contactRequestRepository.create(newContact);
-        await this.mailService.forwardContact(newContactRequest);
-        return this.contactRequestRepository.save(newContactRequest);
-    }
+  async sendEmail(newContact: NewContactDto) {
+    const newContactRequest = this.contactRequestRepository.create(newContact);
+    await this.mailService.forwardContact(newContactRequest);
+    return this.contactRequestRepository.save(newContactRequest);
+  }
 }

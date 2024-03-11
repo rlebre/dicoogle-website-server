@@ -11,7 +11,7 @@ import { MailModule } from './mail/mail.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
+      isGlobal: true
     }),
 
     TypeOrmModule.forRoot({
@@ -31,4 +31,4 @@ import { MailModule } from './mail/mail.module';
     HttpModule
   ]
 })
-export class AppModule { }
+export class AppModule {}

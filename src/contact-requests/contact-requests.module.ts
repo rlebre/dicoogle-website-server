@@ -10,4 +10,4 @@ import { ContactRequestsController } from './contact-requests.controller';
   providers: [ContactRequestsService],
   controllers: [ContactRequestsController]
 })
-export class ContactRequestsModule { }
+export class ContactRequestsModule {}

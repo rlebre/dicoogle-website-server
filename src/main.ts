@@ -8,7 +8,9 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.setGlobalPrefix('/api/v1', { exclude: [{ path: 'download/:hash', method: RequestMethod.GET }, 'download/static/:resource'] });
+  app.setGlobalPrefix('/api/v1', {
+    exclude: [{ path: 'download/:hash', method: RequestMethod.GET }, 'download/static/:resource']
+  });
 
   app.enableCors({ origin: configService.get('APP_URL') || '*' });
 

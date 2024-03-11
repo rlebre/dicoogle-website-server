@@ -9,8 +9,8 @@ import { DownloadRequest } from './entities/download-request.entity';
 import { User } from './entities/user.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, DownloadRequest]), MailModule, HttpModule],
-    providers: [DownloadRequestService, GoogleRecaptchaGuard],
-    controllers: [DownloadRequestController],
+  imports: [TypeOrmModule.forFeature([User, DownloadRequest]), MailModule, HttpModule],
+  providers: [DownloadRequestService, GoogleRecaptchaGuard],
+  controllers: [DownloadRequestController]
 })
-export class DownloadRequestModule { }
+export class DownloadRequestModule {}

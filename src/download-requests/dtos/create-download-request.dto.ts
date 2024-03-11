@@ -1,8 +1,8 @@
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateDownloadRequestDto {
-    @IsNotEmpty({ message: "Resource is required" })
-    readonly resource: string;
+  @IsNotEmpty({ message: 'Resource is required' })
+  readonly resource: string;
 
-    readonly pluginsSourceCode?: boolean;
+  readonly pluginsSourceCode?: boolean;
 }

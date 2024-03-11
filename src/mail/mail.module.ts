@@ -14,8 +14,8 @@ import { MailService } from './mail.service';
           port: config.get('MAIL_PORT'),
           auth: {
             user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PW'),
-          },
+            pass: config.get('MAIL_PW')
+          }
         },
         defaults: {
           from: `Dicoogle <${process.env.MAIL_USER}>`,
@@ -31,14 +31,14 @@ import { MailService } from './mail.service';
           dir: join(__dirname, 'templates'),
           adapter: new HandlebarsAdapter(),
           options: {
-            strict: true,
-          },
-        },
+            strict: true
+          }
+        }
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     })
   ],
   providers: [MailService],
-  exports: [MailService],
+  exports: [MailService]
 })
-export class MailModule { }
+export class MailModule {}
